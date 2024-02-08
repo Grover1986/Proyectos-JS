@@ -19,7 +19,20 @@ function addCourse(e) {
    e.preventDefault()
 
    if(e.target.matches('.agregar-carrito')) {
-      console.log(e.target)
+      const selectCourse = e.target.parentElement.parentElement
+      readDataCourse(selectCourse)
    }
+}
 
+// lee el contenido Html al q le dimos click y extrae la info del curso
+function readDataCourse(course) {
+   // creamos objeto con el contenido del curso actual
+   const infoCourse = {
+      image: course.querySelector('.imagen-curso').src,
+      name: course.querySelector('h4').textContent,
+      price: course.querySelector('.precio span').textContent,
+      id: course.querySelector('.info-card a').dataset.id,
+      quantity: 1
+   }
+   console.log(infoCourse)
 }
