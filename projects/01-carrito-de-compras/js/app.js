@@ -36,8 +36,31 @@ function readDataCourse(course) {
       id: course.querySelector('.info-card a').dataset.id,
       quantity: 1
    }
-   // agrega elementos al arreglo del cartArticles
-   cartArticles = [...cartArticles, infoCourse]
+   // Revisa si un elemento ya existe en el carrito
+   const exist = cartArticles.some(el => el.id === infoCourse.id)
+   if(exist) {
+      /*🗒️ Actualizamos la cantidad */
+      /**
+       * Este código realiza lo siguiente:
+       * 👇👉 Utiliza el método map() para iterar sobre cada artículo en el carrito (cartArticles).
+       * 👇👉 Para cada artículo (course) en el carrito, comprueba si el id del curso coincide con el id del curso que se está intentando agregar (infoCourse.id).
+       * 👇👉 Si hay coincidencia, incrementa la cantidad (quantity) del curso en el carrito y devuelve el mismo objeto curso.
+       * 👇👉 Si no hay coincidencia, simplemente devuelve el curso sin cambios.
+       * 👇👉 Finalmente, actualiza cartArticles con un nuevo arreglo creado a partir de courses, que contiene los cambios realizados.
+       * 👇👉 En resumen, este código actualiza la cantidad de un curso en el carrito si ya existe allí. Si el curso no está en el carrito, simplemente agrega el nuevo curso al carrito.
+       */
+      const courses = cartArticles.map(course => {
+         if(course.id === infoCourse.id) {
+            course.quantity++
+            return course  // retorna el objeto actualizado
+         }else return course  // retorna los objetos q no son duplicados
+      })
+      cartArticles = [...courses]
+
+   }else {
+   // Agrega elementos al arreglo del cartArticles
+      cartArticles = [...cartArticles, infoCourse]
+   }
    cartHTML()
 
    console.log(cartArticles)
