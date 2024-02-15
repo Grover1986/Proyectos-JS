@@ -5,6 +5,8 @@ const d = document
    , courseList = d.querySelector('#lista-cursos')
    , emptyCartBtn = d.querySelector('#vaciar-carrito')
 
+let  cartArticles = []
+
 // Notemos que vamos agregar dos listener ya q tenemos boton 'Agregar al Carrito' y 'Vaciar Carrito'
 // Entonces crearemos una funcion donde registremos todos nuestros  eventListeners
 loadEventListeners()
@@ -34,5 +36,38 @@ function readDataCourse(course) {
       id: course.querySelector('.info-card a').dataset.id,
       quantity: 1
    }
-   console.log(infoCourse)
+   // agrega elementos al arreglo del cartArticles
+   cartArticles = [...cartArticles, infoCourse]
+   cartHTML()
+
+   console.log(cartArticles)
+}
+
+// Muestra el carrito de compras en el HTML
+function cartHTML() {
+   // Limpiar el HTML
+   cleanHTML()
+
+   // Recorre el carrito y genera el HTML
+   cartArticles.forEach(course => {
+      const row = d.createElement('tr')
+      row.innerHTML = `
+         <td><img src='${course.image}' width=60 /></td>
+         <td>${course.name}</td>
+         <td>${course.price}</td>
+         <td>${course.quantity}</td>
+      `
+      cartList.insertAdjacentElement('beforeend', row)
+   })
+}
+
+// Elimina los cursos del tbody
+function cleanHTML() {
+   // forma lenta
+   // cartList.innerHTML = ''
+
+   // forma rápida
+   while(cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild)
+   }
 }
