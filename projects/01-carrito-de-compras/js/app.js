@@ -50,13 +50,18 @@ function cartHTML() {
 
    // Recorre el carrito y genera el HTML
    cartArticles.forEach(course => {
+      // destructurando nuestro objeto curso
+      const { image, name, price, quantity, id } = course
       const row = d.createElement('tr')
       row.innerHTML = `
-         <td><img src='${course.image}' width=60 /></td>
-         <td>${course.name}</td>
-         <td>${course.price}</td>
-         <td>${course.quantity}</td>
-      `
+         <td><img src='${image}' width=100 /></td>
+         <td>${name}</td>
+         <td>${price}</td>
+         <td>${quantity}</td>
+         <td>
+            <a href='#' class='delete-course' data-id=${id}> X </a>
+         </td>
+      ` /* le agregamos atributo data-id 👆 de boton 'Agregar al Carrito' para identificar el curso q estamos eliminando */
       cartList.insertAdjacentElement('beforeend', row)
    })
 }

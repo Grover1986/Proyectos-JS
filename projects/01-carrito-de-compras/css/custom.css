@@ -24,7 +24,7 @@ header {
         text-align: left;
     }
 }
-.borrar-curso {
+.delete-course {
     background-color: red;
     border-radius: 50%;
     padding: 5px 10px;
@@ -32,7 +32,9 @@ header {
     color: white;
     font-weight: bold;
 }
-
+.delete-course:hover {
+    color: white;
+}
 ul {
     list-style: none;
 }
