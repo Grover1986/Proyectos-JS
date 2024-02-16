@@ -13,6 +13,9 @@ loadEventListeners()
 function loadEventListeners() {
    // cuando agregas un curso presionando 'Agregar al Carrito'
    courseList.addEventListener('click', addCourse)
+
+   // elimina cursos del carrito
+   d.addEventListener('click', deleteCourse)
 }
 
 //💊 Funciones
@@ -23,6 +26,15 @@ function addCourse(e) {
    if(e.target.matches('.agregar-carrito')) {
       const selectCourse = e.target.parentElement.parentElement
       readDataCourse(selectCourse)
+   }
+}
+
+function deleteCourse(e) {
+   if(e.target.matches('.delete-course')){
+      const courseId = e.target.dataset.id
+      // elimina del arreglo de cartArticles por el data-id
+      cartArticles = cartArticles.filter(course => course.id !== courseId)
+      cartHTML() // aqui volvemos a iterar sobre el carrito y mostrar su HTML
    }
 }
 
