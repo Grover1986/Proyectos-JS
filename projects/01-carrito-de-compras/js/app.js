@@ -5,7 +5,7 @@ const d = document
    , courseList = d.querySelector('#lista-cursos')
    , emptyCartBtn = d.querySelector('#vaciar-carrito')
 
-let  cartArticles = []
+let cartArticles = []
 
 // Notemos que vamos agregar dos listener ya q tenemos boton 'Agregar al Carrito' y 'Vaciar Carrito'
 // Entonces crearemos una funcion donde registremos todos nuestros  eventListeners
@@ -16,6 +16,8 @@ function loadEventListeners() {
 
    // elimina cursos del carrito
    d.addEventListener('click', deleteCourse)
+   // incrementa cantidad y precio (curso) en carrito
+   d.addEventListener('click', incrementValue)
 }
 
 //💊 Funciones
@@ -91,14 +93,39 @@ function cartHTML() {
       row.innerHTML = `
          <td><img src='${image}' width=100 /></td>
          <td>${name}</td>
-         <td>${price}</td>
-         <td>${quantity}</td>
+         <td><span class='price' data-price='${price.slice(1)}'>$${price.slice(1)}</span></td>
+         <td>
+            <div class='quantity-content'>
+               <button class='decrement-btn'>-</button>
+               <span class='quantity'>${quantity}</span>
+               <button class='increment-btn'>+</button>
+            </div>
+         </td>
          <td>
             <a href='#' class='delete-course' data-id=${id}> X </a>
          </td>
       ` /* le agregamos atributo data-id 👆 de boton 'Agregar al Carrito' para identificar el curso q estamos eliminando */
       cartList.insertAdjacentElement('beforeend', row)
    })
+}
+
+function incrementValue(e) {
+   if (e.target.matches('.increment-btn') || e.target.matches('')) {
+      // Seleccionar el elemento span que muestra la cantidad y el precio
+      const quantityElement = e.target.parentElement.querySelector('.quantity')
+      , priceElement = e.target.parentElement.parentElement.previousElementSibling.querySelector('.price')
+
+      // Obtener el valor de la cantidad del curso y el precio del curso
+      let valueQuantity = parseInt(quantityElement.textContent)
+      , valuePrice = parseInt(priceElement.dataset.price)
+
+      // Incrementar la cantidad
+      valueQuantity = valueQuantity + 1;
+
+      // Actualizar el valor de la cantidad y el precio en el elemento HTML
+      quantityElement.textContent = valueQuantity;
+      priceElement.textContent = `$${valuePrice *= valueQuantity}`
+   }
 }
 
 // Elimina los cursos del tbody

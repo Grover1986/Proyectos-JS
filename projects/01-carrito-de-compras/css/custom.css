@@ -18,6 +18,9 @@ header {
     padding: 20px 0 0 0;
     background: white;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 @media (min-width: 750px) {
     header {
@@ -34,6 +37,20 @@ header {
 }
 .delete-course:hover {
     color: white;
+}
+.quantity-content {	
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 25px;
+
+    & button {
+        padding: 5px;
+        margin: 0;
+        line-height: 0;
+        height: 100%;
+        font-size: 14px;
+    }
 }
 ul {
     list-style: none;
@@ -57,7 +74,6 @@ ul {
     display: block;
     position: absolute;
     right:0;
-
     top:100%;
     z-index: 1;
     background-color: white;
