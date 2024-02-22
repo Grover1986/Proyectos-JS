@@ -46,7 +46,7 @@ function readDataCourse(course) {
    const infoCourse = {
       image: course.querySelector('.imagen-curso').src,
       name: course.querySelector('h4').textContent,
-      price: course.querySelector('.precio span').textContent,
+      price: parseFloat(course.querySelector('.precio span').textContent.slice(1)),
       id: course.querySelector('.info-card a').dataset.id,
       quantity: 1
    }
@@ -66,6 +66,7 @@ function readDataCourse(course) {
       const courses = cartArticles.map(course => {
          if(course.id === infoCourse.id) {
             course.quantity++
+            course.price += infoCourse.price
             return course  // retorna el objeto actualizado
          }else return course  // retorna los objetos q no son duplicados
       })
@@ -93,7 +94,7 @@ function cartHTML() {
       row.innerHTML = `
          <td><img src='${image}' width=100 /></td>
          <td>${name}</td>
-         <td><span class='price' data-price='${price.slice(1)}'>$${price.slice(1)}</span></td>
+         <td><span class='price' data-price='${price}'>$${price}</span></td>
          <td>
             <div class='quantity-content'>
                <button class='decrement-btn'>-</button>
@@ -110,7 +111,7 @@ function cartHTML() {
 }
 
 function incrementValue(e) {
-   if (e.target.matches('.increment-btn') || e.target.matches('')) {
+   if (e.target.matches('.increment-btn')) {
       // Seleccionar el elemento span que muestra la cantidad y el precio
       const quantityElement = e.target.parentElement.querySelector('.quantity')
       , priceElement = e.target.parentElement.parentElement.previousElementSibling.querySelector('.price')
